@@ -72,7 +72,7 @@ export default function FlowSlide({
     steps.forEach((step, i) => {
       timers.current.push(setTimeout(() => {
         setActiveStepIndex(i);
-        const pct = ((i + 0.5) / n) * 100;
+        const pct = (i / (n - 1)) * 100;
         setProgress(pct);
 
         const timestamp = new Date().toTimeString().slice(0, 8);
@@ -145,17 +145,19 @@ export default function FlowSlide({
       )}
         <div className="w-full mt-[12px] md:mt-[26px] shrink-0 overflow-x-visible md:overflow-x-auto md:pb-[10px]">
         <div className="relative px-[4px] w-full md:min-w-[640px]">
-          <div className={`absolute left-0 right-0 top-[14px] ${activeFlow.compact ? 'md:top-[33px]' : 'md:top-[42px]'} h-[3px] bg-line rounded-[3px]`}>
+          <div className={`absolute left-[18px] right-[18px] md:left-[44px] md:right-[44px] top-[14px] ${activeFlow.compact ? 'md:top-[33px]' : 'md:top-[42px]'} h-[3px] bg-line rounded-[3px]`}>
             <div 
-              className={`absolute left-0 top-0 bottom-0 rounded-[3px] transition-[width] duration-500 ease-in-out ${isAlert ? 'bg-[linear-gradient(90deg,var(--color-red),#ff8d86)]' : 'bg-[linear-gradient(90deg,var(--color-amber),#ffb066)]'}`}
+              className={`absolute left-0 top-0 bottom-0 rounded-[3px] transition-[width] duration-[1100ms] ease-in-out ${isAlert ? 'bg-[linear-gradient(90deg,var(--color-red),#ff8d86)]' : 'bg-[linear-gradient(90deg,var(--color-amber),#ffb066)]'}`}
               style={{ width: `${progress}%` }}
             ></div>
           </div>
           
-          <div 
-            className={`absolute left-0 top-[14px] ${activeFlow.compact ? 'md:top-[33px]' : 'md:top-[42px]'} w-[10px] h-[10px] md:w-[18px] md:h-[18px] rounded-full bg-white transform -translate-x-1/2 -translate-y-1/2 transition-[left] duration-[900ms] ease-[cubic-bezier(.6,.05,.3,1)] z-30 ${status !== 'idle' ? 'opacity-100' : 'opacity-0'} ${isAlert ? 'shadow-[0_0_16px_4px_var(--color-red)]' : 'shadow-[0_0_16px_4px_var(--color-amber)]'}`}
-            style={{ left: `${progress}%` }}
-          ></div>
+          <div className={`absolute left-[18px] right-[18px] md:left-[44px] md:right-[44px] top-[14px] ${activeFlow.compact ? 'md:top-[33px]' : 'md:top-[42px]'} h-0 pointer-events-none z-30`}>
+            <div 
+              className={`absolute top-0 w-[10px] h-[10px] md:w-[18px] md:h-[18px] rounded-full bg-white transform -translate-x-1/2 -translate-y-1/2 transition-[left] duration-[1100ms] ease-in-out ${status !== 'idle' ? 'opacity-100' : 'opacity-0'} ${isAlert ? 'shadow-[0_0_16px_4px_var(--color-red)]' : 'shadow-[0_0_16px_4px_var(--color-amber)]'}`}
+              style={{ left: `${progress}%` }}
+            ></div>
+          </div>
 
           <div className="flex justify-between relative">
           {steps.map((step, i) => {
